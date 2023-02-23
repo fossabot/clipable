@@ -1,4 +1,4 @@
-const API_URL = "/api";
+const API_URL = "http://localhost:3000/api";
 
 export interface User {
   id: string;
@@ -32,6 +32,19 @@ export const getVideos = async (): Promise<Video[]> => {
   });
   if (response.status === 204) {
     return [];
+  }
+  return response.json();
+};
+
+export const getVideo = async (videoId: string): Promise<Video | null> => {
+  const response = await fetch(`${API_URL}/clips/${videoId}`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    return null;
   }
   return response.json();
 };

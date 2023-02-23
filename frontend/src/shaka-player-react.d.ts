@@ -4,12 +4,14 @@ declare module "shaka-player-react" {
   interface WithRef {
     ref: MutableRefObject<any>;
     chromeless?: boolean;
+    volume?: number;
   }
 
   interface WithVideoSrc {
     autoPlay?: boolean;
     src: string;
     chromeless?: boolean;
+    volume?: number;
   }
 
   type Props = WithRef | WithVideoSrc
