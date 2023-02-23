@@ -8,8 +8,6 @@ export default function Player({ id }: { id: string }) {
   const videoRef = useRef<any>(null);
 
   const [volume, setVolume] = useState(parseInt(localStorage.getItem("volume") || "80", 10));
-  const [, updateState] = useState<any>();
-  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
     const { player, videoElement } = videoRef.current;
@@ -18,8 +16,6 @@ export default function Player({ id }: { id: string }) {
 
     async function loadVideo() {
       while (!player) {
-        // call forceUpdate to rerender the component in a loop until player is defined
-        forceUpdate();
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
       await player.load(`http://localhost:3000/api/clips/${id}/dash.mpd`);
@@ -34,7 +30,7 @@ export default function Player({ id }: { id: string }) {
     }
 
     loadVideo();
-  }, [id, forceUpdate]);
+  }, [id]);
 
   return <ShakaPlayer ref={videoRef} volume={volume} />;
 }
